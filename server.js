@@ -9,7 +9,7 @@ var config = require('./config');
 var app = express();
 
 app.use(express.static('public'));
-app.listen(process.env.PORT || 8080);
+app.use(express.static('public'));
 
 var runServer = function(callback) {
     mongoose.connect(config.DATABASE_URL, function(err) {
@@ -24,6 +24,14 @@ var runServer = function(callback) {
                 callback();
             }
         });
+    });
+};
+
+if (require.main === module) {
+    runServer(function(err) {
+        if (err) {
+            console.error(err);
+        }
     });
 };
 
