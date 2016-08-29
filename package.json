@@ -1,0 +1,33 @@
+{
+  "name": "gameswap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.5.10"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.0.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/auldsy-ababua/gameswap.git"
+  },
+  "keywords": [
+    "game",
+    "trade"
+  ],
+  "author": "Colin AUlds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/auldsy-ababua/gameswap/issues"
+  },
+  "homepage": "https://github.com/auldsy-ababua/gameswap#readme"
+}
