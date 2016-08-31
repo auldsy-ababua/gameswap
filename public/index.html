@@ -1,10 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <p>hellow worls</p>
-  </body>
+
+<head>
+    <title>Gameswap MVP</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <link rel="stylesheet" href="loginpage.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--login-->
+    <section class="loginform cf">
+        <form name="login" action="index_submit" method="get" accept-charset="utf-8">
+            <ul>
+                <li>
+                    <label for="usermail">Email</label>
+                    <input type="email" name="usermail" placeholder="yourname@email.com" required>
+                </li>
+                <li>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="password" required>
+                </li>
+                <li>
+                    <input type="submit" value="Login">
+                </li>
+            </ul>
+            <br>
+            <h5 id="makeProfile">Don't have an account? <a href>Sign up here!</a></h5>
+        </form>
+    </section>
+
+    <!--create profile screen-->
+
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
+                    <label for="disabled">Disabled</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--home screen-->
+    <!--profile screen-->
+    <!--search screen-->
+    <!--matches screen-->
+
+</body>
+
+<!--Import jQuery before materialize.js-->
+<script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
 </html>
