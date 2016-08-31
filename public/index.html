@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+<!-- gist for this project can be found here: https://gist.github.com/auldsy-ababua/05efd51146647a18f80f1b689a578ce5 -->
 
 <head>
+
     <title>Gameswap MVP</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
@@ -23,7 +25,7 @@
                     <input type="password" name="password" placeholder="password" required>
                 </li>
                 <li>
-                    <input type="submit" value="Login">
+                    <input type="submit" class="waves-effect waves-light btn" value="Login">
                 </li>
             </ul>
             <br>
@@ -37,7 +39,7 @@
         <form class="col s12">
             <div class="row">
                 <div class="input-field col s6">
-                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                    <input id="first_name" type="text" class="validate">
                     <label for="first_name">First Name</label>
                 </div>
                 <div class="input-field col s6">
@@ -45,24 +47,55 @@
                     <label for="last_name">Last Name</label>
                 </div>
             </div>
+
             <div class="row">
-                <div class="input-field col s12">
-                    <input disabled value="I am not editable" id="disabled" type="text" class="validate">
-                    <label for="disabled">Disabled</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
+              <div class="input-field col s6">
+                  <input placeholder="This will act as your login ID" id="email" type="email" class="validate">
+                  <label for="email" data-error="wrong" data-success="right">Email</label>
+              </div>
+                <div class="input-field col s6">
                     <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
+                    <label for="password">Create Password</label>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s6">
+                  <input id="street1" type="text" class="validate">
+                  <label for="street1">Street Address Line 1</label>
+              </div>
+                <div class="input-field col s6">
+                    <input id="street2" type="text" class="validate">
+                    <label for="street2">Street Address Line 2</label>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
+              <div class="input-field col s6">
+                  <input id="city" type="text" class="validate">
+                  <label for="city">City</label>
+              </div>
+                <div class="input-field col s6">
+                    <input id="state" type="text" class="validate">
+                    <label for="state">State/Region/Province</label>
                 </div>
             </div>
+            <div class="row">
+              <div class="input-field col s6">
+                  <input id="zip" type="text" class="validate">
+                  <label for="zip">Postal/Zip Code</label>
+              </div>
+                <div class="input-field col s6">
+                    <input id="phone" type="tel" class="validate">
+                    <label for="phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                  <input placeholder="How many miles are you willing to travel?" id="radius" type="number" class="validate">
+                  <label for="radius">Travel Radius (in Miles)</label>
+              </div>
+            </div>
+            <input type="submit" class="waves-effect waves-light btn" value="Let's trade!">
         </form>
     </div>
 
