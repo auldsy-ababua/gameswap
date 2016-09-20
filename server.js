@@ -80,7 +80,7 @@ var UserGame = require('./models/models').UserGame;
 
 var bcrypt = require('bcryptjs');
 
-//signin endpoint
+//signin endpoint - working
 //(create new user) POST (name, email, password, city)
 app.post('/users', jsonParser, function(req, res) {
     if (!req.body) {
@@ -168,27 +168,78 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-
-
-//this one confuses me the most
 //search games endpoint
 //grabbing from user login
-app.get('/games', function(req, res) {
-    UserGames.find().sort("game").exec(function(err, items) {
+app.get('/games', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+  UserGame.find({
+    "user": req.user._id,
+    "own": false
+  }).exec(function(err, gamesIWant) {
+    console.log(gamesIWant);
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+          message: 'Internal Server Error'
+      });
+    }
+    //[{id, game...} , { id, game}] => [game,game]
+    var gamesIWantSearch = gamesIWant.map(function(val,index){
+      return val.game
+    })
+    UserGame.find({
+      "game": { "$in": gamesIWantSearch },
+      "own": true
+    })
+    .exec(function(err, usersThatHaveGameIWant){
+      console.log(usersThatHaveGameIWant);
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Internal Server Error'
+        });
+      }
+      var usersThatHaveGameIWantSearch = gamesIWant.map(function(val,index){
+        return val.user
+      })
+      UserGame.find({
+        "user": { "$in": usersThatHaveGameIWantSearch },
+        "own": true
+      }).exec(function(err, gamesTheyHave){
+        console.log(gamesTheyHave);
         if (err) {
+          console.log(err);
+          return res.status(500).json({
+              message: 'Internal Server Error'
+          });
+        }
+        var gamesTheyHaveSearch = gamesTheyHave.map(function(val,index){
+          return val.game
+        })
+        UserGame.find({
+          "user": req.user._id,
+          "own": true,
+          "game": { "$in" : gamesTheyHaveSearch }
+        })
+        .exec(function (err, gamesMatched) {
+          console.log(gamesMatched);
+          if (err) {
+            console.log(err);
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
-        }
-        res.json(items);
-    });
-});
+          }
+          res.json(gamesMatched);
+        });//gamesMatched
+      });//gamesTheyHave
+    });//usersThatHaveGameIWant
+  });//gamesIWant
+});//get
 
 //my games endpoint
 //(own (true), own (false)) find UserGame by User
-app.get('/mygames', function(req, res) {
+app.get('/mygames', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     UserGame.find({
-        "user": req.body.user
+        "user": req.user._id
     }).sort("game").exec(function(err, items) {
         if (err) {
             return res.status(500).json({
@@ -199,13 +250,12 @@ app.get('/mygames', function(req, res) {
     });
 });
 
-//add games
-//(own (true or false), game name)
-app.post('/mygames', function(req, res) {
+//add games - working
+app.post('/mygames', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
     UserGame.create({
-        user: req.body.user,
-        game: req.body.game,
-        own: req.body.own
+        "user": req.user._id,
+        "game": req.body.game,
+        "own": req.body.own
     }, function(err, item) {
         if (err) {
             return res.status(500).json({
@@ -218,7 +268,7 @@ app.post('/mygames', function(req, res) {
 
 //remove games
 //(_id)
-app.delete('/mygames/:id', function(req, res) {
+app.delete('/mygames/:id', jsonParser, function(req, res) {
     var id = req.params.id;
     UserGame.remove({
         '_id': id
@@ -231,18 +281,19 @@ app.delete('/mygames/:id', function(req, res) {
     })
 });
 
-app.use('*', function(req, res) {
-    res.status(404).json({
-        message: 'Not Found'
-    });
-});
-
 app.use(passport.initialize());
 
 
-app.get('/hidden', passport.authenticate('basic', {session: false}), function(req, res) {
+app.get('/hidden', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+  console.log(req.user);
     res.json({
         message: 'Luke... I am your father'
+    });
+});
+
+app.use('*', function(req, res) {
+    res.status(404).json({
+        message: 'Not Found'
     });
 });
 
