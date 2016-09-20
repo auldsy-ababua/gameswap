@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<!-- gist for this project can be found here: https://gist.github.com/auldsy-ababua/05efd51146647a18f80f1b689a578ce5 -->
+
+<head>
+
+    <title>Gameswap MVP</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="gameswap.1.0.0.css">
+</head>
+
+<body>
+    <!--login-->
+    <section id="loginform">
+        <section class="loginform cf">
+            <form name="login" action="index_submit" method="get" accept-charset="utf-8">
+                <ul>
+                    <li>
+                        <label for="usermail">Email</label>
+                        <input type="email" name="usermail" placeholder="yourname@email.com" required>
+                    </li>
+                    <li>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" placeholder="password" required>
+                    </li>
+                    <li>
+                        <input type="submit" class="waves-effect waves-light btn" value="Login">
+                    </li>
+                </ul>
+                <br>
+                <h5 id="makeProfile">Don't have an account? <a href>Sign up here!</a></h5>
+            </form>
+        </section>
+    </section>
+    <!--create profile screen-->
+    <section id="create-profile">
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate" required>
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" type="text" class="validate">
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input placeholder="This will act as your login ID" id="email" type="email" class="validate" required>
+                        <label for="email" data-error="wrong" data-success="right">Email</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="password" type="password" class="validate" required>
+                        <label for="password">Create Password</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="street1" type="text" class="validate">
+                        <label for="street1">Street Address Line 1</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="street2" type="text" class="validate">
+                        <label for="street2">Street Address Line 2</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="city" type="text" class="validate" required>
+                        <label for="city">City</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="state" type="text" class="validate" required>
+                        <label for="state">State/Region/Province</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="zip" type="text" class="validate" required>
+                        <label for="zip">Postal/Zip Code</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="phone" type="tel" class="validate">
+                        <label for="phone">Phone Number</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="How many miles are you willing to travel?" id="radius" type="number" class="validate" required>
+                        <label for="radius">Travel Radius (in Miles)</label>
+                    </div>
+                </div>
+                <input type="submit" class="waves-effect waves-light btn" value="Let's trade!">
+            </form>
+        </div>
+    </section>
+    <!--home screen-->
+    <section id="home">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Logo</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Search</a></li>
+                    <li><a href="">Matches</a></li>
+                    <li><a href="">Profile</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <form name="game-search" id="game-search" action="index_submit" method="get" accept-charset="utf-8">
+            <ul>
+                <li>
+                    <div class="input-field col s6">
+                        <select class="games-owned">
+                            <option value="" disabled selected>What Game Do You Want To Trade?</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-field col s6">
+                        <select class="games-wanted">
+                            <option value="" disabled selected>What Game Would You Like To Have?</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <div class="input-field col s12">
+                        <select class="city">
+                            <option value="" disabled selected>What City Do You Live In?</option>
+                        </select>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn waves-effect waves-light" id="search-submit-button" type="submit" name="action">Show me my matches
+                        <i class="material-icons right">send</i>
+                    </button>
+                </li>
+            </ul>
+        </form>
+
+        <div id="match-data">
+        </div>
+
+        <div id="template-parent" style="display:none">
+          <div class="profile-template">
+            <h5 class="name">Name: <span></span></h5>
+            <h5 class="city">City: <span></span></h5>
+            <h5 class="phone">Phone: <span></span></h5>
+          <hr/>
+          </div>
+        </div>
+
+
+
+
+        <ul class="slides">
+            <li>
+                <img src="https://images.unsplash.com/10/wii.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=43cfc3deeed70e165663284179867d30">
+                <div class="caption center-align">
+                    <h3>Easy swaps</h3>
+                    <h5 class="light grey-text text-lighten-3">Meet with your trader.</h5>
+                </div>
+            </li>
+        </ul>
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Our Mission</h5>
+                        <p class="grey-text text-lighten-4">Thanks for coming to Gameswap, where you can cut out the gamestop middleman.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Follow Me</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Follow Me On Twitter</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">See My Github</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2016 Gameswap
+                </div>
+            </div>
+        </footer>
+    </section>
+    <!--profile screen-->
+    <section id="profile">
+    </section>
+
+    <!--search screen-->
+    <section id="search">
+        <div class="caption center-align">
+            <h3>Search for the Games you want and already own</h3>
+        </div>
+        <div class="search-wrapper card">
+            <input id="search" placeholder="Search Games Here">
+            <div class="search-results"></div>
+        </div>
+    </section>
+    <!--matches screen-->
+    <section id="matches">
+    </section>
+</body>
+
+<!--Import jQuery before materialize.js-->
+<script src="gameswap.1.0.0.js"></script>
+
+</html>
