@@ -170,7 +170,6 @@ app.post('/users', jsonParser, function(req, res) {
 
 
 //search games endpoint
-//grabbing from user login
 app.get('/games', jsonParser, passport.authenticate('basic', {
     session: false
 }), function(req, res) {

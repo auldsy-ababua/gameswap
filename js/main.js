@@ -153,7 +153,7 @@ class GameswapView {
             async: false,
             success: function(response) {
                 console.log(response)
-                
+
             }
         });
     };
@@ -254,6 +254,25 @@ $(document).ready(function() {
         $("#home").show();
         $("#create-profile").hide();
         $("#loginform").hide();
+        $("#search").hide();
+    })
+
+    //hit search button on nav to go to search screen
+    $(".nav #searchMenu").click(e => {
+        $(".nav").show();
+        $("#search").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#home").hide();
+    })
+
+    //hit profile button on nav to go to myprofile screen
+    $(".nav #profileMenu").click(e => {
+        $(".nav").show();
+        $("#profile").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#home").hide();
         $("#search").hide();
     })
 });
