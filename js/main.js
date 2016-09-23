@@ -249,7 +249,7 @@ $(document).ready(function() {
     })
 
     //hit home button on nav to go home
-    $("#home").click(e => {
+    $(".nav #homeMenu").click(e => {
         $(".nav").show();
         $("#home").show();
         $("#create-profile").hide();
@@ -260,10 +260,12 @@ $(document).ready(function() {
     //hit search button on nav to go to search screen
     $(".nav #searchMenu").click(e => {
         $(".nav").show();
+        $("#profile").hide();
         $("#search").show();
         $("#create-profile").hide();
         $("#loginform").hide();
         $("#home").hide();
+
     })
 
     //hit profile button on nav to go to myprofile screen
