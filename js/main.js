@@ -34,13 +34,13 @@ var mockData = {
 }
 
 window.addEventListener('DOMContentLoaded', function(e) {
- mockData.game.forEach(function(value, index) {
-    document.querySelectorAll('li:nth-child(1) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
-    document.querySelectorAll('li:nth-child(2) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
- });
- mockData.city.forEach(function(value, index) {
-    document.querySelectorAll('li:nth-child(3) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
-  });
+    mockData.game.forEach(function(value, index) {
+        document.querySelectorAll('li:nth-child(1) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
+        document.querySelectorAll('li:nth-child(2) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
+    });
+    mockData.city.forEach(function(value, index) {
+        document.querySelectorAll('li:nth-child(3) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
+    });
 });
 
 
@@ -91,24 +91,110 @@ class GameswapView {
         let cityval = $(city).val();
         let data = this.services.profile(); //in the future, will make the API call here
         let myClass = this;
-        data.forEach(function (value, index) {
-          console.log(ownedval, wantedval, cityval);
-          console.log(value);
-          if (ownedval == value.gameWanted && wantedval == value.gameOwned && cityval == value.city) {
-            myClass.profArray.push(value);
-          }
+        data.forEach(function(value, index) {
+            console.log(ownedval, wantedval, cityval);
+            console.log(value);
+            if (ownedval == value.gameWanted && wantedval == value.gameOwned && cityval == value.city) {
+                myClass.profArray.push(value);
+            }
         })
-        this.profArray.forEach(function (value, index) {
-          var template = $("#template-parent .profile-template")
-          template.find(".name span").html(value.name);
-          template.find(".city span").html(value.city);
-          template.find(".phone span").html(value.phone);
-          template.clone().appendTo("#match-data");
+        this.profArray.forEach(function(value, index) {
+            var template = $("#template-parent .profile-template")
+            template.find(".name span").html(value.name);
+            template.find(".city span").html(value.city);
+            template.find(".phone span").html(value.phone);
+            template.clone().appendTo("#match-data");
         })
     }
 
+    //bind for signin endpoint
+    sign(username, password) {
+        let usernameVal = $(username).val();
+        let passwordVal = $(password).val();
 
-};
+        $.ajax({
+            type: "GET",
+            url: "/mygames",
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+                console.log(response)
+            }
+        });
+    }
+
+
+    //bind for search games endpoint
+    sign(username, password) {
+        let usernameVal = $(username).val();
+        let passwordVal = $(password).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/games",
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+                console.log(response)
+
+            }
+        });
+    };
+
+    //bind for my games endpoint
+    sign(username, password) {
+        let usernameVal = $(username).val();
+        let passwordVal = $(password).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/mygames",
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+                console.log(response)
+                
+            }
+        });
+    };
+
+    //bind for add games endpoint
+    sign(username, password) {
+        let usernameVal = $(username).val();
+        let passwordVal = $(password).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/mygames",
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+                console.log(response)
+                //response should be from game search?
+                $("#profile .gamesOwned span").html().append(response);
+            }
+        });
+    };
+
+    //bind for remove games endpoint
+    sign(username, password) {
+        let usernameVal = $(username).val();
+        let passwordVal = $(password).val();
+
+        $.ajax({
+            type: "DELETE",
+            url: "/mygames/:id",
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+                console.log(response)
+
+            }
+        });
+    };
+}
+
+
 
 $(document).ready(function() {
     var gameswapApp = new GameswapView();
@@ -121,4 +207,53 @@ $(document).ready(function() {
 
     });
 
+    $("#login").submit(function(event) {
+        event.preventDefault()
+        console.log("The login");
+        gameswapApp.login("#username", "#password");
+        return false;
+    });
+
+    $("#signinForm").submit(function(event) {
+        event.preventDefault()
+        console.log("The signin");
+        gameswapApp.signin("#usermail", "#password");
+        return false;
+    });
+
+    //go to login page
+    $("#loginMenu").click(e => {
+        $("#loginform").show();
+        $(".nav").show();
+        $("#create-profile").hide();
+        $("#home").hide();
+        $("#search").hide();
+    })
+
+    //login and go home
+    $("#loginform #login-button").click(e => {
+        $("#home").show();
+        $(".nav").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#search").hide();
+    })
+
+    //hit sign up at bottom of login to go to make profile page
+    $("#makeProfile a").click(e => {
+        $(".nav").show();
+        $("#create-profile").show();
+        $("#loginform").hide();
+        $("#home").hide();
+        $("#search").hide();
+    })
+
+    //hit home button on nav to go home
+    $("#home").click(e => {
+        $(".nav").show();
+        $("#home").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#search").hide();
+    })
 });

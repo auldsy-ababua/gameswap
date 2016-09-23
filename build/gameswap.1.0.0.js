@@ -164,12 +164,107 @@
 	                template.clone().appendTo("#match-data");
 	            });
 	        }
+	
+	        //bind for signin endpoint
+	
+	    }, {
+	        key: 'sign',
+	        value: function sign(username, password) {
+	            var usernameVal = $(username).val();
+	            var passwordVal = $(password).val();
+	
+	            $.ajax({
+	                type: "GET",
+	                url: "/mygames",
+	                dataType: 'json',
+	                async: false,
+	                success: function success(response) {
+	                    console.log(response);
+	                }
+	            });
+	        }
+	
+	        //bind for search games endpoint
+	
+	    }, {
+	        key: 'sign',
+	        value: function sign(username, password) {
+	            var usernameVal = $(username).val();
+	            var passwordVal = $(password).val();
+	
+	            $.ajax({
+	                type: "GET",
+	                url: "/games",
+	                dataType: 'json',
+	                async: false,
+	                success: function success(response) {
+	                    console.log(response);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'sign',
+	
+	
+	        //bind for my games endpoint
+	        value: function sign(username, password) {
+	            var usernameVal = $(username).val();
+	            var passwordVal = $(password).val();
+	
+	            $.ajax({
+	                type: "GET",
+	                url: "/mygames",
+	                dataType: 'json',
+	                async: false,
+	                success: function success(response) {
+	                    console.log(response);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'sign',
+	
+	
+	        //bind for add games endpoint
+	        value: function sign(username, password) {
+	            var usernameVal = $(username).val();
+	            var passwordVal = $(password).val();
+	
+	            $.ajax({
+	                type: "POST",
+	                url: "/mygames",
+	                dataType: 'json',
+	                async: false,
+	                success: function success(response) {
+	                    console.log(response);
+	                    //response should be from game search?
+	                    $("#profile .gamesOwned span").html().append(response);
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'sign',
+	
+	
+	        //bind for remove games endpoint
+	        value: function sign(username, password) {
+	            var usernameVal = $(username).val();
+	            var passwordVal = $(password).val();
+	
+	            $.ajax({
+	                type: "DELETE",
+	                url: "/mygames/:id",
+	                dataType: 'json',
+	                async: false,
+	                success: function success(response) {
+	                    console.log(response);
+	                }
+	            });
+	        }
 	    }]);
 	
 	    return GameswapView;
 	}();
-	
-	;
 	
 	$(document).ready(function () {
 	    var gameswapApp = new GameswapView();
@@ -179,6 +274,56 @@
 	        console.log("The data was submitted");
 	        gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
 	        return false;
+	    });
+	
+	    $("#login").submit(function (event) {
+	        event.preventDefault();
+	        console.log("The login");
+	        gameswapApp.login("#username", "#password");
+	        return false;
+	    });
+	
+	    $("#signinForm").submit(function (event) {
+	        event.preventDefault();
+	        console.log("The signin");
+	        gameswapApp.signin("#usermail", "#password");
+	        return false;
+	    });
+	
+	    //go to login page
+	    $("#loginMenu").click(function (e) {
+	        $("#loginform").show();
+	        $(".nav").show();
+	        $("#create-profile").hide();
+	        $("#home").hide();
+	        $("#search").hide();
+	    });
+	
+	    //login and go home
+	    $("#loginform #login-button").click(function (e) {
+	        $("#home").show();
+	        $(".nav").show();
+	        $("#create-profile").hide();
+	        $("#loginform").hide();
+	        $("#search").hide();
+	    });
+	
+	    //hit sign up at bottom of login to go to make profile page
+	    $("#makeProfile a").click(function (e) {
+	        $(".nav").show();
+	        $("#create-profile").show();
+	        $("#loginform").hide();
+	        $("#home").hide();
+	        $("#search").hide();
+	    });
+	
+	    //hit home button on nav to go home
+	    $("#home").click(function (e) {
+	        $(".nav").show();
+	        $("#home").show();
+	        $("#create-profile").hide();
+	        $("#loginform").hide();
+	        $("#search").hide();
 	    });
 	});
 

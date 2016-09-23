@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 var strategy = new BasicStrategy(function(username, password, callback) {
     User.findOne({
         username: username
-    }, function (err, user) {
+    }, function(err, user) {
         if (err) {
             callback(err);
             return;
@@ -70,7 +70,7 @@ if (require.main === module) {
             console.error(err);
         }
     });
-};
+}
 
 var User = require('./models/models').User;
 var UserGame = require('./models/models').UserGame;
@@ -156,7 +156,6 @@ app.post('/users', jsonParser, function(req, res) {
 
             user.save(function(err) {
                 if (err) {
-                  console.log(err);
                     return res.status(500).json({
                         message: 'Internal server error'
                     });
@@ -168,76 +167,81 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
+
+
 //search games endpoint
 //grabbing from user login
-app.get('/games', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-  UserGame.find({
-    "user": req.user._id,
-    "own": false
-  }).exec(function(err, gamesIWant) {
-    console.log(gamesIWant);
-    if (err) {
-      console.log(err);
-      return res.status(500).json({
-          message: 'Internal Server Error'
-      });
-    }
-    //[{id, game...} , { id, game}] => [game,game]
-    var gamesIWantSearch = gamesIWant.map(function(val,index){
-      return val.game
-    })
+app.get('/games', jsonParser, passport.authenticate('basic', {
+    session: false
+}), function(req, res) {
     UserGame.find({
-      "game": { "$in": gamesIWantSearch },
-      "own": true
-    })
-    .exec(function(err, usersThatHaveGameIWant){
-      console.log(usersThatHaveGameIWant);
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-            message: 'Internal Server Error'
-        });
-      }
-      var usersThatHaveGameIWantSearch = gamesIWant.map(function(val,index){
-        return val.user
-      })
-      UserGame.find({
-        "user": { "$in": usersThatHaveGameIWantSearch },
-        "own": true
-      }).exec(function(err, gamesTheyHave){
-        console.log(gamesTheyHave);
+        "user": req.user._id,
+        "own": false
+    }).exec(function(err, gamesIWant) {
         if (err) {
-          console.log(err);
-          return res.status(500).json({
-              message: 'Internal Server Error'
-          });
-        }
-        var gamesTheyHaveSearch = gamesTheyHave.map(function(val,index){
-          return val.game
-        })
-        UserGame.find({
-          "user": req.user._id,
-          "own": true,
-          "game": { "$in" : gamesTheyHaveSearch }
-        })
-        .exec(function (err, gamesMatched) {
-          console.log(gamesMatched);
-          if (err) {
-            console.log(err);
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
-          }
-          res.json(gamesMatched);
-        });//gamesMatched
-      });//gamesTheyHave
-    });//usersThatHaveGameIWant
-  });//gamesIWant
-});//get
+        }
+        //[{id, game...} , { id, game}] => [game,game]
+        var gamesIWantSearch = gamesIWant.map(function(val, index) {
+            return val.game;
+        });
+        UserGame.find({
+                "game": {
+                    "$in": gamesIWantSearch
+                },
+                "own": true
+            })
+            .exec(function(err, usersThatHaveGameIWant) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Internal Server Error'
+                    });
+                }
+                var usersThatHaveGameIWantSearch = gamesIWant.map(function(val, index) {
+                    return val.user;
+                });
+                UserGame.find({
+                    "user": {
+                        "$in": usersThatHaveGameIWantSearch
+                    },
+                    "own": true
+                }).exec(function(err, gamesTheyHave) {
+                    if (err) {
+                        return res.status(500).json({
+                            message: 'Internal Server Error'
+                        });
+                    }
+                    var gamesTheyHaveSearch = gamesTheyHave.map(function(val, index) {
+                        return val.game;
+                    });
+                    UserGame.find({
+                            "user": req.user._id,
+                            "own": true,
+                            "game": {
+                                "$in": gamesTheyHaveSearch
+                            }
+                        })
+                        .exec(function(err, gamesMatched) {
+                            if (err) {
+
+                                return res.status(500).json({
+                                    message: 'Internal Server Error'
+                                });
+                            }
+                            res.json(gamesMatched);
+                        }); //gamesMatched
+                }); //gamesTheyHave
+            }); //usersThatHaveGameIWant
+    }); //gamesIWant
+}); //get
 
 //my games endpoint
 //(own (true), own (false)) find UserGame by User
-app.get('/mygames', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+app.get('/mygames', jsonParser, passport.authenticate('basic', {
+    session: false
+}), function(req, res) {
     UserGame.find({
         "user": req.user._id
     }).sort("game").exec(function(err, items) {
@@ -251,7 +255,9 @@ app.get('/mygames', jsonParser, passport.authenticate('basic', {session: false})
 });
 
 //add games - working
-app.post('/mygames', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
+app.post('/mygames', jsonParser, passport.authenticate('basic', {
+    session: false
+}), function(req, res) {
     UserGame.create({
         "user": req.user._id,
         "game": req.body.game,
@@ -278,16 +284,17 @@ app.delete('/mygames/:id', jsonParser, function(req, res) {
         }
 
         return res.sendStatus(210);
-    })
+    });
 });
 
 app.use(passport.initialize());
 
 
-app.get('/hidden', jsonParser, passport.authenticate('basic', {session: false}), function(req, res) {
-  console.log(req.user);
+app.get('/hidden', jsonParser, passport.authenticate('basic', {
+    session: false
+}), function(req, res) {
     res.json({
-        message: 'Luke... I am your father'
+        message: 'This is a test'
     });
 });
 
@@ -296,6 +303,8 @@ app.use('*', function(req, res) {
         message: 'Not Found'
     });
 });
+
+
 
 exports.app = app;
 exports.runServer = runServer;

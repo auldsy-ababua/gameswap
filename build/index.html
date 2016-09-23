@@ -11,21 +11,33 @@
 </head>
 
 <body>
+    <!--nav-->
+    <nav class="nav">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a id="homeMenu" href="#">Home</a></li>
+                <li><a id="searchMenu" href="#">Search</a></li>
+                <li><a id="profileMenu" href="#">Profile</a></li>
+                <li><a id="loginMenu" href="#">Login</a></li>
+            </ul>
+        </div>
+    </nav>
     <!--login-->
     <section id="loginform">
         <section class="loginform cf">
-            <form name="login" action="index_submit" method="get" accept-charset="utf-8">
+            <form name="login" id="login" action="index_submit" method="get" accept-charset="utf-8">
                 <ul>
                     <li>
                         <label for="usermail">Email</label>
-                        <input type="email" name="usermail" placeholder="yourname@email.com" required>
+                        <input type="text" name="username" id="username" placeholder="yourname@email.com" required>
                     </li>
                     <li>
                         <label for="password">Password</label>
-                        <input type="password" name="password" placeholder="password" required>
+                        <input type="password" name="password" id="password" placeholder="password" required>
                     </li>
                     <li>
-                        <input type="submit" class="waves-effect waves-light btn" value="Login">
+                        <input type="submit" class="waves-effect waves-light btn" id="login-button" value="Login">
                     </li>
                 </ul>
                 <br>
@@ -36,7 +48,7 @@
     <!--create profile screen-->
     <section id="create-profile">
         <div class="row">
-            <form class="col s12">
+            <form class="col s12" id="signinForm">
                 <div class="row">
                     <div class="input-field col s6">
                         <input id="first_name" type="text" class="validate" required>
@@ -101,18 +113,6 @@
     </section>
     <!--home screen-->
     <section id="home">
-        <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo">Logo</a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Search</a></li>
-                    <li><a href="">Matches</a></li>
-                    <li><a href="">Profile</a></li>
-                </ul>
-            </div>
-        </nav>
-
         <form name="game-search" id="game-search" action="index_submit" method="get" accept-charset="utf-8">
             <ul>
                 <li>
@@ -148,17 +148,13 @@
         </div>
 
         <div id="template-parent" style="display:none">
-          <div class="profile-template">
-            <h5 class="name">Name: <span></span></h5>
-            <h5 class="city">City: <span></span></h5>
-            <h5 class="phone">Phone: <span></span></h5>
-          <hr/>
-          </div>
+            <div class="profile-template">
+                <h5 class="name">Name: <span></span></h5>
+                <h5 class="city">City: <span></span></h5>
+                <h5 class="phone">Phone: <span></span></h5>
+                <hr/>
+            </div>
         </div>
-
-
-
-
         <ul class="slides">
             <li>
                 <img src="https://images.unsplash.com/10/wii.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=43cfc3deeed70e165663284179867d30">
@@ -193,6 +189,11 @@
     </section>
     <!--profile screen-->
     <section id="profile">
+        <h5 class="name">Name: <span></span></h5>
+        <h5 class="city">City: <span></span></h5>
+        <h5 class="phone">Phone: <span></span></h5>
+        <h5 class="gamesOwned">Games You Own: <span></span></h5>
+        <h5 class="gamesWanted">Games You Want: <span></span></h5>
     </section>
 
     <!--search screen-->
@@ -204,9 +205,6 @@
             <input id="search" placeholder="Search Games Here">
             <div class="search-results"></div>
         </div>
-    </section>
-    <!--matches screen-->
-    <section id="matches">
     </section>
 </body>
 
