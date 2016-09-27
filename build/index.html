@@ -41,7 +41,7 @@
                     </li>
                 </ul>
                 <br>
-                <h5 id="makeProfile">Don't have an account? <a href>Sign up here!</a></h5>
+                <h5 id="makeProfile">Don't have an account? <a href="#">Sign up here!!!!!</a></h5>
             </form>
         </section>
     </section>
@@ -73,16 +73,6 @@
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="street1" type="text" class="validate">
-                        <label for="street1">Street Address Line 1</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="street2" type="text" class="validate">
-                        <label for="street2">Street Address Line 2</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
                         <input id="city" type="text" class="validate" required>
                         <label for="city">City</label>
                     </div>
@@ -91,28 +81,13 @@
                         <label for="state">State/Region/Province</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input id="zip" type="text" class="validate" required>
-                        <label for="zip">Postal/Zip Code</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="phone" type="tel" class="validate">
-                        <label for="phone">Phone Number</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input placeholder="How many miles are you willing to travel?" id="radius" type="number" class="validate" required>
-                        <label for="radius">Travel Radius (in Miles)</label>
-                    </div>
-                </div>
                 <input type="submit" class="waves-effect waves-light btn" value="Let's trade!">
             </form>
         </div>
     </section>
     <!--home screen-->
     <section id="home">
+        <!--
         <form name="game-search" id="game-search" action="index_submit" method="get" accept-charset="utf-8">
             <ul>
                 <li>
@@ -143,18 +118,8 @@
                 </li>
             </ul>
         </form>
+      -->
 
-        <div id="match-data">
-        </div>
-
-        <div id="template-parent" style="display:none">
-            <div class="profile-template">
-                <h5 class="name">Name: <span></span></h5>
-                <h5 class="city">City: <span></span></h5>
-                <h5 class="phone">Phone: <span></span></h5>
-                <hr/>
-            </div>
-        </div>
         <ul class="slides">
             <li>
                 <img src="https://images.unsplash.com/10/wii.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=43cfc3deeed70e165663284179867d30">
@@ -189,28 +154,58 @@
     </section>
     <!--profile screen-->
     <section id="profile">
-        <h5 class="name">Name: <span></span></h5>
-        <h5 class="city">City: <span></span></h5>
-        <h5 class="phone">Phone: <span></span></h5>
-        <h5 class="gamesOwned">Games You Own: <span></span></h5>
-        <h5 class="gamesWanted">Games You Want: <span></span></h5>
+        <!--<div id="owned">
+            <h5 class="gamesOwned">Games You Own: <span></span></h5>
+            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div id="wanted">
+            <h5 class="gamesWanted">Games You Want: <span></span></h5>
+            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>-->
+        <form name="add-owned" id="add-owned" action="index_submit" method="post" accept-charset="utf-8">
+            <ul>
+                <li>
+                    <label for="owned"></label>
+                    <input type="search" name="owned" id="owned" placeholder="What Games Do You Own">
+                </li>
+                <li>
+                    <button class="btn-floating btn-large waves-effect waves-light red" type="submit"
+                        <i class="material-icons">add</i>
+                    </button>
+                </li>
+            </ul>
+        </form>
+        <form name="add-wanted" id="add-wanted" action="index_submit" method="post" accept-charset="utf-8">
+            <ul>
+                <li>
+                    <label for="wanted"></label>
+                    <input type="search" name="wanted" id="wanted" placeholder="What Games Do You Want">
+                </li>
+                <li>
+                    <button class="btn-floating btn-large waves-effect waves-light red" type="submit"
+                        <i class="material-icons">add</i>
+                    </button>
+                </li>
+            </ul>
+        </form>
     </section>
 
     <!--search screen-->
     <section id="search">
         <div class="caption center-align">
-            <h3>Search for the Games you want and already own</h3>
+            <h3>Your Local Matches</h3>
         </div>
-            <form name="login" id="login" action="index_submit" method="get" accept-charset="utf-8">
-                <ul>
-                    <li>
-                        <input type="text" name="search" id="search-input" placeholder="search games here" required>
-                    </li>
-                    <li>
-                        <input type="submit" class="waves-effect waves-light btn" id="search-button" value="search">
-                    </li>
-                </ul>
-            </form>
+        <div id="match-data">
+        </div>
+
+        <div id="template-parent" style="display:none">
+            <div class="profile-template">
+                <h5 class="email">Email: <span></span></h5>
+                <h5 class="city">City: <span></span></h5>
+                <h5 class="phone">Phone: <span></span></h5>
+                <hr/>
+            </div>
+        </div>
     </section>
 </body>
 

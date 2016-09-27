@@ -83,6 +83,7 @@ var bcrypt = require('bcryptjs');
 //signin endpoint - working
 //(create new user) POST (name, email, password, city)
 app.post('/users', jsonParser, function(req, res) {
+  console.log(req.body);
     if (!req.body) {
         return res.status(400).json({
             message: "No request body"
@@ -90,6 +91,7 @@ app.post('/users', jsonParser, function(req, res) {
     }
 
     if (!('username' in req.body)) {
+      console.log(req.body);
         return res.status(422).json({
             message: 'Missing field: username'
         });
@@ -148,10 +150,13 @@ app.post('/users', jsonParser, function(req, res) {
             }
 
             var user = new User({
+                name: req.body.first_name,
+                lastname: req.body.last_name,
                 username: username,
                 password: hash,
                 city: req.body.city,
-                email: req.body.email
+                state: req.body.state,
+                email: req.body.username
             });
 
             user.save(function(err) {
