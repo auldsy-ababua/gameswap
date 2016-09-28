@@ -236,26 +236,83 @@ function gamer(response){
     current++;
 
     if(current>limit) return;
-    
-    var addOwnButton = $("<button type='button'>Add Own</button>");
-    var addWantButton = $("<button type='button'>Add Want</button>");
+
+    var addOwnButton = $("<button type='button' class='waves-effect waves-light btn'>Add To Games I Own</button>");
+    var addWantButton = $("<button type='button' class='waves-effect waves-light btn'>Add To Games I Want</button>");
+
 
     function addClosure(game,type){
       return function(){
         var container = "#gamesIOwn"
-        if(type=="want") container = "#gamesIWant";
+        var own = true;
+        if(type=="want") {
+          container = "#gamesIWant"
+          own = false;
+        };
         var li = $("<li></li>");
         li.append(game);
         $(container).append("<li>"+game+"</li>")
+
+        $.ajax({
+            type: "POST",
+            url: "/mygames",
+            dataType: 'json',
+            data:   {
+                    "game": game,
+                    "own": own
+                  },
+            headers: {
+              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+            },
+            async: false,
+            success: function(response) {
+                console.log(response);
+                //response should be from game search?
+                $("#profile .gamesOwned span").html().append(response);
+            }
+        });
       }
     }
 
-    addOwnButton.click( addClosure(val.name,"own") );
-    addWantButton.click( addClosure(val.name,"want") );
+    var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
+
+    function deleteClosure(game){
+      return function(){
+
+        $.ajax({
+            type: "REMOVE",
+            url: "/mygames",
+            dataType: 'json',
+            data:   {
+                    "game": game,
+                    "own": own
+                  },
+            headers: {
+              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+            },
+            async: false,
+            success: function(response) {
+                console.log(response);
+                //response should be from game search?
+                $("#profile .gamesOwned span").html().append(response);
+            }
+        });
+      }
+    }
+
+    removeGameButton.click( deleteClosure(val.name) );
+    addOwnButton.click( addClosure(val.name,"own"), function () {
+      $("#gamesIOwn").append(removeGameButton);
+    });
+    addWantButton.click( addClosure(val.name,"want"), function () {
+      $("#gamesIWant").append(removeGameButton);
+    });
 
     var li = $("<li></li>");
     li.append(val.name).append(addOwnButton).append(addWantButton)
     $("#gamescontainer").append(li)
+
+
   })
   console.log(response)
 }

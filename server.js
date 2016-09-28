@@ -242,7 +242,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
 }); //get
 
 //my games endpoint
-//(own (true), own (false)) find UserGame by User
+//(own (true), own (false))
 app.get('/mygames', jsonParser, passport.authenticate('basic', {
     session: false
 }), function(req, res) {

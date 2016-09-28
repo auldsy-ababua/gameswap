@@ -6,7 +6,7 @@ var materialize = require('materialize-css');
 import GameswapView from './view.js';
 
 
-window.addEventListener('DOMContentLoaded', function(e) {
+/*window.addEventListener('DOMContentLoaded', function(e) {
     mockData.game.forEach(function(value, index) {
         document.querySelectorAll('li:nth-child(1) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
         document.querySelectorAll('li:nth-child(2) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', function(e) {
     mockData.city.forEach(function(value, index) {
         document.querySelectorAll('li:nth-child(3) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
     });
-});
+});*/
 
 
 
@@ -98,7 +98,15 @@ $(document).ready(function() {
         $("#create-profile").hide();
         $("#loginform").hide();
         $("#home").hide();
-
+        var showMatches = function () {
+          $("#game-search").submit(function(event) {
+              event.preventDefault();
+              console.log("The data was submitted");
+              gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
+              return false;
+          });
+        };
+        $("match-data").html(showMatches);
     });
 
     //hit profile button on nav to go to myprofile screen
