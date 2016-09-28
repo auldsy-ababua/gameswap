@@ -166,28 +166,40 @@
             <ul>
                 <li>
                     <label for="owned"></label>
-                    <input type="search" name="owned" id="owned" placeholder="What Games Do You Own">
+                    <input type="search" name="owned" id="gamesearch" placeholder="Search for games to add in your profile">
                 </li>
                 <li>
                     <button class="btn-floating btn-large waves-effect waves-light red" type="submit"
-                        <i class="material-icons">add</i>
+                        <i class="material-icons">search</i>
                     </button>
                 </li>
             </ul>
-        </form>
-        <form name="add-wanted" id="add-wanted" action="index_submit" method="post" accept-charset="utf-8">
-            <ul>
-                <li>
-                    <label for="wanted"></label>
-                    <input type="search" name="wanted" id="wanted" placeholder="What Games Do You Want">
-                </li>
-                <li>
-                    <button class="btn-floating btn-large waves-effect waves-light red" type="submit"
-                        <i class="material-icons">add</i>
-                    </button>
-                </li>
+
+
+            <ul id="gamescontainer">
+
             </ul>
         </form>
+
+
+
+        <div style="display: flex">
+          <div style='flex: 1'>
+            <h2>Games I own</h2>
+
+            <ul id="gamesIOwn">
+
+            </ul>
+          </div>
+          <div style='flex: 1'>
+            <h2>Games I want</h2>
+
+            <ul id="gamesIWant">
+
+            </ul>
+          </div>
+        </div>
+
     </section>
 
     <!--search screen-->
@@ -211,5 +223,42 @@
 
 <!--Import jQuery before materialize.js-->
 <script src="gameswap.1.0.0.js"></script>
+
+<script>
+
+function gamer(response){
+
+  if(!response) return;
+
+  var limit=10;
+  var current = 0;
+  response.results.forEach(function(val){
+    current++;
+
+    if(current>limit) return;
+    
+    var addOwnButton = $("<button type='button'>Add Own</button>");
+    var addWantButton = $("<button type='button'>Add Want</button>");
+
+    function addClosure(game,type){
+      return function(){
+        var container = "#gamesIOwn"
+        if(type=="want") container = "#gamesIWant";
+        var li = $("<li></li>");
+        li.append(game);
+        $(container).append("<li>"+game+"</li>")
+      }
+    }
+
+    addOwnButton.click( addClosure(val.name,"own") );
+    addWantButton.click( addClosure(val.name,"want") );
+
+    var li = $("<li></li>");
+    li.append(val.name).append(addOwnButton).append(addWantButton)
+    $("#gamescontainer").append(li)
+  })
+  console.log(response)
+}
+</script>
 
 </html>
