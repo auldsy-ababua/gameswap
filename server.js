@@ -13,7 +13,10 @@ var config = require('./config');
 var app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(jsonParser);
 
 var strategy = new BasicStrategy(function(username, password, callback) {
     User.findOne({
@@ -259,9 +262,10 @@ app.get('/mygames', jsonParser, passport.authenticate('basic', {
 });
 
 //add games - working
-app.post('/mygames', jsonParser, passport.authenticate('basic', {
+app.post('/mygames', passport.authenticate('basic', {
     session: false
 }), function(req, res) {
+  console.log(req.body);
     UserGame.create({
         "user": req.user._id,
         "game": req.body.game,
@@ -283,11 +287,13 @@ app.delete('/mygames/:id', jsonParser, function(req, res) {
     UserGame.remove({
         '_id': id
     }, function(err, item) {
+      console.log(item);
         if (err) {
+          console.log(err);
             return res.sendStatus(404);
         }
 
-        return res.sendStatus(210);
+        return res.sendStatus(200);
     });
 });
 

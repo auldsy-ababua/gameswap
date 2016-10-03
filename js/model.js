@@ -59,10 +59,6 @@ export default class GameswapServices {
 
     }
 
-    profile() {
-        return mockData.profile;
-    }
-
 
     //bind for add games endpoint
     signin(first_name, last_name,email,password,city,state,callback) {

@@ -69,6 +69,21 @@ export default class GameswapView {
 
 
     showSearchResults(owned, wanted, city) {
+
+      function callback(data){
+        var container=$("#match-data");
+        console.log(data);
+        data.forEach(function(value, index) {
+
+            container.append(value);
+        });
+      }
+
+
+      this.services.getgames(localStorage.username, localStorage.password,callback);
+
+
+      /*
         let ownedval = $(owned).val();
         let wantedval = $(wanted).val();
         let cityval = $(city).val();
@@ -82,12 +97,75 @@ export default class GameswapView {
             }
         });
         this.profArray.forEach(function(value, index) {
-            var template = $("#template-parent .profile-template")
+            var template = $("#template-parent .profile-template");
             template.find(".name span").html(value.name);
             template.find(".city span").html(value.city);
             template.find(".phone span").html(value.phone);
             template.clone().appendTo("#match-data");
         });
+        */
+    }
+
+
+
+
+    addClosure(game,type) {
+
+      var appview = this;
+
+      return function(){
+        var container = "#gamesIOwn";
+        var own = true;
+        if(type=="want") {
+          container = "#gamesIWant";
+          own = false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/mygames",
+            data:   {
+                    "game": game,
+                    "own": own
+                  },
+            headers: {
+              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+            },
+            async: false,
+            success: function(response) {
+                var li = $("<li></li>");
+
+                var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
+
+                li.append(response.game);
+                li.append(removeGameButton);
+
+                removeGameButton.click( appview.deleteClosure(response._id,response.own, li) );
+                $(container).append(li);
+            }
+        });
+      };
+    }
+
+
+    deleteClosure(id,own,li){
+      return function(){
+
+        $.ajax({
+            type: "DELETE",
+            url: "/mygames/"+id,
+            headers: {
+              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+            },
+            async: false,
+            success: function(response) {
+                console.log(response);
+                li.remove();
+                //if(own) $("#gamesIOwn").remove(li);
+                //else $("#gamesIWant").remove(li);
+            }
+        });
+      };
     }
 
 }

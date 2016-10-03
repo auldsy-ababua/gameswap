@@ -20,8 +20,9 @@ import GameswapView from './view.js';
 
 
 $(document).ready(function() {
-    var gameswapApp = new GameswapView();
 
+  window.gameswapApp = new GameswapView();
+  /*
     $("#game-search").submit(function(event) {
         event.preventDefault();
         console.log("The data was submitted");
@@ -29,7 +30,7 @@ $(document).ready(function() {
         return false;
 
     });
-
+*/
     $("#login").submit(function(event) {
         event.preventDefault();
         console.log("The login");
@@ -98,6 +99,10 @@ $(document).ready(function() {
         $("#create-profile").hide();
         $("#loginform").hide();
         $("#home").hide();
+        
+        gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
+
+        /*
         var showMatches = function () {
           $("#game-search").submit(function(event) {
               event.preventDefault();
@@ -106,7 +111,7 @@ $(document).ready(function() {
               return false;
           });
         };
-        $("match-data").html(showMatches);
+        $("match-data").html(showMatches);*/
     });
 
     //hit profile button on nav to go to myprofile screen
