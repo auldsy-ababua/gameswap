@@ -175,7 +175,18 @@ app.post('/users', jsonParser, function(req, res) {
     });
 });
 
-
+app.get('/users/:id', function (req, res) {
+  User.findOne({
+    "_id": req.params.id
+  }).exec(function(err, userID) {
+      if (err) {
+          return res.status(500).json({
+              message: 'Internal Server Error'
+          });
+      }
+      res.json(userID);
+      });
+});
 
 //search games endpoint
 app.get('/games', jsonParser, passport.authenticate('basic', {

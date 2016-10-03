@@ -249,7 +249,6 @@
 	      var state = $("#state").val();
 	
 	      var callback = function callback(response) {
-	        $("#profile .gamesOwned span").html().append(response);
 	        if (response) {
 	          localStorage.username = email;
 	          localStorage.password = password;
@@ -265,8 +264,20 @@
 	        var container = $("#match-data");
 	        console.log(data);
 	        data.forEach(function (value, index) {
-	
-	          container.append(value);
+	          $.ajax({
+	            type: "GET",
+	            url: "/users/" + value.user,
+	            dataType: 'json',
+	            async: false,
+	            success: function success(response) {
+	              var matchTemplate = $(".template-parent #profile-tamplate").clone();
+	              $(matchTemplate).find(".email span").html(response.email);
+	              $(matchTemplate).find(".city span").html(response.city);
+	              $(matchTemplate).find(".game span").html(response.game);
+	              container.append(matchTemplate);
+	              console.log(response);
+	            }
+	          });
 	        });
 	      }
 	

@@ -57,7 +57,6 @@ export default class GameswapView {
       let state = $("#state").val();
 
       let callback = function(response){
-        $("#profile .gamesOwned span").html().append(response);
         if(response){
           localStorage.username = email;
           localStorage.password = password;
@@ -74,8 +73,22 @@ export default class GameswapView {
         var container=$("#match-data");
         console.log(data);
         data.forEach(function(value, index) {
+            $.ajax({
+                type: "GET",
+                url: "/users/" + value.user,
+                dataType: 'json',
+                async: false,
+                success: function(response) {
+                    var matchTemplate = $(".template-parent #profile-tamplate").clone();
+                    $(matchTemplate).find(".email span").html(response.email);
+                    $(matchTemplate).find(".city span").html(response.city);
+                    $(matchTemplate).find(".game span").html(response.game);
+                    container.append(matchTemplate);
+                    console.log(response);
+                }
+            });
 
-            container.append(value);
+
         });
       }
 
