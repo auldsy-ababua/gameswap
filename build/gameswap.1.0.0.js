@@ -68,6 +68,9 @@
 	$(document).ready(function () {
 	
 	    window.gameswapApp = new _view2.default();
+	    $("#logoutMenu").hide();
+	    $("#SearchMenu").hide();
+	    $("#profileMenu").hide();
 	    /*
 	      $("#game-search").submit(function(event) {
 	          event.preventDefault();
@@ -80,6 +83,7 @@
 	        event.preventDefault();
 	        console.log("The login");
 	        gameswapApp.games("#username", "#password");
+	        $("#loginMenu").hide();
 	        return false;
 	    });
 	
@@ -270,7 +274,7 @@
 	            dataType: 'json',
 	            async: false,
 	            success: function success(response) {
-	              var matchTemplate = $(".template-parent #profile-tamplate").clone();
+	              var matchTemplate = $("#template-parent .profile-template").clone();
 	              $(matchTemplate).find(".email span").html(response.email);
 	              $(matchTemplate).find(".city span").html(response.city);
 	              $(matchTemplate).find(".game span").html(response.game);

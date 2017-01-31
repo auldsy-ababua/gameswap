@@ -22,6 +22,9 @@ import GameswapView from './view.js';
 $(document).ready(function() {
 
   window.gameswapApp = new GameswapView();
+  $("#logoutMenu").hide();
+  $("#searchMenu").hide();
+  $("#profileMenu").hide();
   /*
     $("#game-search").submit(function(event) {
         event.preventDefault();
@@ -35,6 +38,10 @@ $(document).ready(function() {
         event.preventDefault();
         console.log("The login");
         gameswapApp.games("#username", "#password");
+        $("#loginMenu").hide();
+        $("#logoutMenu").show();
+        $("#searchMenu").show();
+        $("#profileMenu").show();
         return false;
     });
 
@@ -99,7 +106,7 @@ $(document).ready(function() {
         $("#create-profile").hide();
         $("#loginform").hide();
         $("#home").hide();
-        
+
         gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
 
         /*

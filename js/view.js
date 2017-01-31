@@ -79,7 +79,7 @@ export default class GameswapView {
                 dataType: 'json',
                 async: false,
                 success: function(response) {
-                    var matchTemplate = $(".template-parent #profile-tamplate").clone();
+                    var matchTemplate = $("#template-parent .profile-template").clone();
                     $(matchTemplate).find(".email span").html(response.email);
                     $(matchTemplate).find(".city span").html(response.city);
                     $(matchTemplate).find(".game span").html(response.game);
