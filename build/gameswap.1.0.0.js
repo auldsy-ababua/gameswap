@@ -69,7 +69,7 @@
 	
 	    window.gameswapApp = new _view2.default();
 	    $("#logoutMenu").hide();
-	    $("#SearchMenu").hide();
+	    $("#searchMenu").hide();
 	    $("#profileMenu").hide();
 	    /*
 	      $("#game-search").submit(function(event) {
@@ -81,10 +81,24 @@
 	    */
 	    $("#login").submit(function (event) {
 	        event.preventDefault();
-	        console.log("The login");
+	        console.log("The user is logged in");
 	        gameswapApp.games("#username", "#password");
 	        $("#loginMenu").hide();
+	        $("#logoutMenu").show();
+	        $("#searchMenu").show();
+	        $("#profileMenu").show();
 	        return false;
+	    });
+	
+	    $("#logoutMenu").click(function (event) {
+	        console.log('logged out the user', localStorage.username);
+	        delete localStorage.username;
+	        delete localStorage.password;
+	        $("#loginMenu").show();
+	        $("#logoutMenu").hide();
+	        $("#searchMenu").hide();
+	        $("#profileMenu").hide();
+	        //take to home page
 	    });
 	
 	    $("#signinForm").submit(function (event) {
@@ -169,7 +183,21 @@
 	        $("#loginform").hide();
 	        $("#home").hide();
 	        $("#search").hide();
+	        gameswapApp.getGames();
 	    });
+	
+	    //page refresh
+	    if (localStorage.username !== undefined && localStorage.password !== undefined) {
+	        $("#loginMenu").hide();
+	        $("#logoutMenu").show();
+	        $("#searchMenu").show();
+	        $("#profileMenu").show();
+	    } else {
+	        $("#loginMenu").show();
+	        $("#logoutMenu").hide();
+	        $("#searchMenu").hide();
+	        $("#profileMenu").hide();
+	    }
 	});
 
 /***/ },
@@ -230,6 +258,27 @@
 	      this.services.mygames(usernameVal, passwordVal, callback);
 	    }
 	  }, {
+	    key: "getGames",
+	    value: function getGames() {
+	      $("#gamesIOwn").empty();
+	      $("#gamesIWant").empty();
+	      var myClass = this;
+	      var callback = function callback(response) {
+	        console.log(response);
+	        response.forEach(function (game) {
+	          console.log(game);
+	          myClass.showGame(game);
+	          var li = myClass.showGame(game);
+	          if (game.own == true) {
+	            $("#gamesIOwn").append(li);
+	          } else {
+	            $("#gamesIWant").append(li);
+	          }
+	        });
+	      };
+	      this.services.mygames(localStorage.username, localStorage.password, callback);
+	    }
+	  }, {
 	    key: "searchGames",
 	    value: function searchGames(gameIput) {
 	      var gamesearch = $(gameIput).val();
@@ -263,7 +312,7 @@
 	  }, {
 	    key: "showSearchResults",
 	    value: function showSearchResults(owned, wanted, city) {
-	
+	      $("#match-data").empty();
 	      function callback(data) {
 	        var container = $("#match-data");
 	        console.log(data);
@@ -312,8 +361,7 @@
 	  }, {
 	    key: "addClosure",
 	    value: function addClosure(game, type) {
-	
-	      var appview = this;
+	      var myClass = this;
 	
 	      return function () {
 	        var container = "#gamesIOwn";
@@ -335,18 +383,25 @@
 	          },
 	          async: false,
 	          success: function success(response) {
-	            var li = $("<li></li>");
-	
-	            var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
-	
-	            li.append(response.game);
-	            li.append(removeGameButton);
-	
-	            removeGameButton.click(appview.deleteClosure(response._id, response.own, li));
+	            var li = myClass.showGame(response);
 	            $(container).append(li);
+	            console.log("response.game");
 	          }
 	        });
 	      };
+	    }
+	  }, {
+	    key: "showGame",
+	    value: function showGame(response) {
+	      var li = $("<li></li>");
+	
+	      var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
+	
+	      li.append(response.game);
+	      li.append(removeGameButton);
+	
+	      removeGameButton.click(this.deleteClosure(response._id, response.own, li));
+	      return li;
 	    }
 	  }, {
 	    key: "deleteClosure",

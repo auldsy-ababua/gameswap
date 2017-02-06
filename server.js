@@ -188,10 +188,20 @@ app.get('/users/:id', function (req, res) {
       });
 });
 
-//search games endpoint
+/*
+mario wants MGSV:PP, has Brick.
+colin wants brick, has MGSV:PP.
+
+*/
+
+
+
+
+//match users endpoint
 app.get('/games', jsonParser, passport.authenticate('basic', {
     session: false
 }), function(req, res) {
+    //Find other users that own the games that I want
     UserGame.find({
         "user": req.user._id,
         "own": false
@@ -205,11 +215,13 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
         var gamesIWantSearch = gamesIWant.map(function(val, index) {
             return val.game;
         });
+        //Finding other users that have the game I want
         UserGame.find({
                 "game": {
                     "$in": gamesIWantSearch
                 },
-                "own": true
+                "own": true,
+                "user": {"$ne":req.user._id}
             })
             .exec(function(err, usersThatHaveGameIWant) {
                 if (err) {
@@ -217,14 +229,16 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
                         message: 'Internal Server Error'
                     });
                 }
-                var usersThatHaveGameIWantSearch = gamesIWant.map(function(val, index) {
+                var usersThatHaveGameIWantSearch = usersThatHaveGameIWant.map(function(val, index) {
                     return val.user;
                 });
+                //Does the user that has the game I want also want the game that I own
+
                 UserGame.find({
                     "user": {
                         "$in": usersThatHaveGameIWantSearch
                     },
-                    "own": true
+                    "own": false
                 }).exec(function(err, gamesTheyHave) {
                     if (err) {
                         return res.status(500).json({
@@ -234,6 +248,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
                     var gamesTheyHaveSearch = gamesTheyHave.map(function(val, index) {
                         return val.game;
                     });
+                    console.log(gamesTheyHaveSearch);
                     UserGame.find({
                             "user": req.user._id,
                             "own": true,
@@ -249,6 +264,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
                                 });
                             }
                             res.json(gamesMatched);
+                            console.log(gamesMatched);
                         }); //gamesMatched
                 }); //gamesTheyHave
             }); //usersThatHaveGameIWant

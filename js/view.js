@@ -32,7 +32,27 @@ export default class GameswapView {
           localStorage.password = passwordVal;
         }
       };
-      this.services.mygames(usernameVal, passwordVal,callback);
+      this.services.mygames(usernameVal, passwordVal, callback);
+    }
+
+    getGames(){
+      $("#gamesIOwn").empty();
+      $("#gamesIWant").empty();
+      var myClass = this;
+      var callback = function(response) {
+        console.log(response);
+        response.forEach(function(game){
+          console.log(game);
+          myClass.showGame(game);
+          var li = myClass.showGame(game);
+          if (game.own == true) {
+            $("#gamesIOwn").append(li)
+          } else {
+            $("#gamesIWant").append(li)
+          }
+        })
+      }
+      this.services.mygames(localStorage.username, localStorage.password, callback)
     }
 
     searchGames(gameIput){
@@ -68,7 +88,7 @@ export default class GameswapView {
 
 
     showSearchResults(owned, wanted, city) {
-
+      $("#match-data").empty();
       function callback(data){
         var container=$("#match-data");
         console.log(data);
@@ -93,7 +113,7 @@ export default class GameswapView {
       }
 
 
-      this.services.getgames(localStorage.username, localStorage.password,callback);
+      this.services.getgames(localStorage.username, localStorage.password, callback);
 
 
       /*
@@ -123,8 +143,7 @@ export default class GameswapView {
 
 
     addClosure(game,type) {
-
-      var appview = this;
+      var myClass = this;
 
       return function(){
         var container = "#gamesIOwn";
@@ -146,18 +165,24 @@ export default class GameswapView {
             },
             async: false,
             success: function(response) {
-                var li = $("<li></li>");
-
-                var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
-
-                li.append(response.game);
-                li.append(removeGameButton);
-
-                removeGameButton.click( appview.deleteClosure(response._id,response.own, li) );
+                var li = myClass.showGame(response);
                 $(container).append(li);
+                console.log("response.game");
             }
         });
       };
+    }
+
+    showGame(response){
+      var li = $("<li></li>");
+
+      var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
+
+      li.append(response.game);
+      li.append(removeGameButton);
+
+      removeGameButton.click( this.deleteClosure(response._id,response.own, li) );
+      return li;
     }
 
 

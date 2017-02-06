@@ -36,7 +36,7 @@ $(document).ready(function() {
 */
     $("#login").submit(function(event) {
         event.preventDefault();
-        console.log("The login");
+        console.log("The user is logged in");
         gameswapApp.games("#username", "#password");
         $("#loginMenu").hide();
         $("#logoutMenu").show();
@@ -44,6 +44,17 @@ $(document).ready(function() {
         $("#profileMenu").show();
         return false;
     });
+
+    $("#logoutMenu").click(function(event) {
+        console.log('logged out the user', localStorage.username);
+        delete localStorage.username;
+        delete localStorage.password;
+        $("#loginMenu").show();
+        $("#logoutMenu").hide();
+        $("#searchMenu").hide();
+        $("#profileMenu").hide();
+        //take to home page
+    })
 
     $("#signinForm").submit(function(event) {
         event.preventDefault();
@@ -129,5 +140,19 @@ $(document).ready(function() {
         $("#loginform").hide();
         $("#home").hide();
         $("#search").hide();
+        gameswapApp.getGames();
     });
+
+    //page refresh
+    if (localStorage.username !== undefined && localStorage.password !== undefined) {
+      $("#loginMenu").hide();
+      $("#logoutMenu").show();
+      $("#searchMenu").show();
+      $("#profileMenu").show();
+    } else {
+      $("#loginMenu").show();
+      $("#logoutMenu").hide();
+      $("#searchMenu").hide();
+      $("#profileMenu").hide();
+    }
 });
