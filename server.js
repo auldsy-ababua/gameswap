@@ -178,14 +178,20 @@ app.post('/users', jsonParser, function(req, res) {
 app.get('/users/:id', function (req, res) {
   User.findOne({
     "_id": req.params.id
-  }).exec(function(err, userID) {
+  }).exec(function(err, userObject) {
       if (err) {
           return res.status(500).json({
               message: 'Internal Server Error'
           });
       }
-      res.json(userID);
-      });
+      UserGame.find({
+        user: req.params.id
+      }).exec(function(err, userGames) {
+        userObject.games = userGames;
+        console.log(userGames);
+        res.json({user:userObject, games:userGames});
+      })
+  });
 });
 
 /*
@@ -207,6 +213,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
         "own": false
     }).exec(function(err, gamesIWant) {
         if (err) {
+            console.log("error2", err)
             return res.status(500).json({
                 message: 'Internal Server Error'
             });
@@ -225,6 +232,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
             })
             .exec(function(err, usersThatHaveGameIWant) {
                 if (err) {
+                    console.log("error1", err)
                     return res.status(500).json({
                         message: 'Internal Server Error'
                     });
@@ -233,8 +241,20 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
                     return val.user;
                 });
                 //Does the user that has the game I want also want the game that I own
+                User.find({
+                    "_id": {
+                        "$in": usersThatHaveGameIWantSearch
+                    }
+                  }).exec(function(err, users) {
+                      if (err) {
+                          console.log("error", err)
+                          return res.status(500).json({
+                              message: 'Internal Server Error'
+                          });
+                      } res.json(users);
+                  });
 
-                UserGame.find({
+                /*UserGame.find({
                     "user": {
                         "$in": usersThatHaveGameIWantSearch
                     },
@@ -266,7 +286,7 @@ app.get('/games', jsonParser, passport.authenticate('basic', {
                             res.json(gamesMatched);
                             console.log(gamesMatched);
                         }); //gamesMatched
-                }); //gamesTheyHave
+                }); //gamesTheyHave*/
             }); //usersThatHaveGameIWant
     }); //gamesIWant
 }); //get

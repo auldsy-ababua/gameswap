@@ -41,7 +41,7 @@ export default class GameswapView {
       var myClass = this;
       var callback = function(response) {
         console.log(response);
-        response.forEach(function(game){
+        response.forEach(function(game) {
           console.log(game);
           myClass.showGame(game);
           var li = myClass.showGame(game);
@@ -88,23 +88,26 @@ export default class GameswapView {
 
 
     showSearchResults(owned, wanted, city) {
-      $("#match-data").empty();
+      $("#match").empty();
       function callback(data){
         var container=$("#match-data");
         console.log(data);
         data.forEach(function(value, index) {
             $.ajax({
                 type: "GET",
-                url: "/users/" + value.user,
+                url: "/users/" + value._id,
                 dataType: 'json',
                 async: false,
                 success: function(response) {
                     var matchTemplate = $("#template-parent .profile-template").clone();
-                    $(matchTemplate).find(".email span").html(response.email);
-                    $(matchTemplate).find(".city span").html(response.city);
-                    $(matchTemplate).find(".game span").html(response.game);
+                    response.games.forEach(function(userGames){
+                      $(matchTemplate).find(".game span").append(userGames.game);
+                    })
+                    $(matchTemplate).find(".email span").html(response.user.email);
+                    $(matchTemplate).find(".city span").html(response.user.city);
+
                     container.append(matchTemplate);
-                    console.log(response);
+                    console.log(response.user);
                 }
             });
 
