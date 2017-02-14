@@ -6,10 +6,8 @@ export default class GameswapView {
         this.services = new GameswapServices();
         console.log("ready!");
         $("#home").show();
-
         this.showForm();
         this.profArray = [];
-
     }
 
     showForm() {
@@ -17,196 +15,157 @@ export default class GameswapView {
         for (let city in cities) {
             $('#myselect').append(`<option>${city}</option>option>`);
         }
-        //populate game i have select
-        //populate game i want select
-        //populate city select
     }
 
-    games(){
-      let usernameVal = $("#username").val();
-      let passwordVal = $("#password").val();
+    games() {
+        let usernameVal = $("#username").val();
+        let passwordVal = $("#password").val();
 
-      let callback = function(response){
-        if(response){
-          localStorage.username = usernameVal;
-          localStorage.password = passwordVal;
-        }
-      };
-      this.services.mygames(usernameVal, passwordVal, callback);
+        let callback = function(response) {
+            if (response) {
+                localStorage.username = usernameVal;
+                localStorage.password = passwordVal;
+            }
+        };
+        this.services.mygames(usernameVal, passwordVal, callback);
     }
 
-    getGames(){
-      $("#gamesIOwn").empty();
-      $("#gamesIWant").empty();
-      var myClass = this;
-      var callback = function(response) {
-        console.log(response);
-        response.forEach(function(game) {
-          console.log(game);
-          myClass.showGame(game);
-          var li = myClass.showGame(game);
-          if (game.own == true) {
-            $("#gamesIOwn").append(li)
-          } else {
-            $("#gamesIWant").append(li)
-          }
-        })
-      }
-      this.services.mygames(localStorage.username, localStorage.password, callback)
-    }
-
-    searchGames(gameIput){
-      let gamesearch = $(gameIput).val();
-
-      $("#gamescontainer").empty();
-      let callback = function(response){
-        if(response){
-          console.log(response);
-        }
-      };
-      this.services.games(gamesearch,callback);
-    }
-
-
-    signin(){
-      let first_name = $("#first_name").val();
-      let last_name = $("#last_name").val();
-      let email = $("#email").val();
-      let password = $("#password").val();
-      let city = $("#city").val();
-      let state = $("#state").val();
-
-      let callback = function(response){
-        if(response){
-          localStorage.username = email;
-          localStorage.password = password;
-        }
-      };
-      this.services.signin(first_name, last_name,email,password,city,state,callback);
-    }
-
-
-
-    showSearchResults(owned, wanted, city) {
-      $("#match").empty();
-      function callback(data){
-        var container=$("#match-data");
-        console.log(data);
-        data.forEach(function(value, index) {
-            $.ajax({
-                type: "GET",
-                url: "/users/" + value._id,
-                dataType: 'json',
-                async: false,
-                success: function(response) {
-                    var matchTemplate = $("#template-parent .profile-template").clone();
-                    response.games.forEach(function(userGames){
-                      $(matchTemplate).find(".game span").append(userGames.game);
-                    })
-                    $(matchTemplate).find(".email span").html(response.user.email);
-                    $(matchTemplate).find(".city span").html(response.user.city);
-
-                    container.append(matchTemplate);
-                    console.log(response.user);
+    getGames() {
+        $("#gamesIOwn").empty();
+        $("#gamesIWant").empty();
+        var myClass = this;
+        var callback = function(response) {
+            console.log(response);
+            response.forEach(function(game) {
+                console.log(game);
+                myClass.showGame(game);
+                var li = myClass.showGame(game);
+                if (game.own == true) {
+                    $("#gamesIOwn").append(li);
+                } else {
+                    $("#gamesIWant").append(li);
                 }
             });
-
-
-        });
-      }
-
-
-      this.services.getgames(localStorage.username, localStorage.password, callback);
-
-
-      /*
-        let ownedval = $(owned).val();
-        let wantedval = $(wanted).val();
-        let cityval = $(city).val();
-        let data = this.services.profile(); //in the future, will make the API call here
-        let myClass = this;
-        data.forEach(function(value, index) {
-            console.log(ownedval, wantedval, cityval);
-            console.log(value);
-            if (ownedval == value.gameWanted && wantedval == value.gameOwned && cityval == value.city) {
-                myClass.profArray.push(value);
-            }
-        });
-        this.profArray.forEach(function(value, index) {
-            var template = $("#template-parent .profile-template");
-            template.find(".name span").html(value.name);
-            template.find(".city span").html(value.city);
-            template.find(".phone span").html(value.phone);
-            template.clone().appendTo("#match-data");
-        });
-        */
+        };
+        this.services.mygames(localStorage.username, localStorage.password, callback);
     }
 
+    searchGames(gameIput) {
+        let gamesearch = $(gameIput).val();
 
+        $("#gamescontainer").empty();
+        let callback = function(response) {
+            if (response) {
+                console.log(response);
+            }
+        };
+        this.services.games(gamesearch, callback);
+    }
 
+    signin() {
+        let first_name = $("#first_name").val();
+        let last_name = $("#last_name").val();
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let city = $("#city").val();
+        let state = $("#state").val();
 
-    addClosure(game,type) {
-      var myClass = this;
+        let callback = function(response) {
+            if (response) {
+                localStorage.username = email;
+                localStorage.password = password;
+            }
+        };
+        this.services.signin(first_name, last_name, email, password, city, state, callback);
+    }
 
-      return function(){
-        var container = "#gamesIOwn";
-        var own = true;
-        if(type=="want") {
-          container = "#gamesIWant";
-          own = false;
+    showSearchResults(owned, wanted, city) {
+        $("#match").empty();
+        function callback(data) {
+            var container = $("#match-data");
+            console.log(data);
+            data.forEach(function(value, index) {
+                $.ajax({
+                    type: "GET",
+                    url: "/users/" + value._id,
+                    dataType: 'json',
+                    async: false,
+                    success: function(response) {
+                        var matchTemplate = $("#template-parent .profile-template").clone();
+                        response.games.forEach(function(userGames) {
+                            $(matchTemplate).find(".game span").append(userGames.game);
+                        });
+                        $(matchTemplate).find(".email span").html(response.user.email);
+                        $(matchTemplate).find(".city span").html(response.user.city);
+
+                        container.append(matchTemplate);
+                        console.log(response.user);
+                    }
+                });
+            });
         }
+        this.services.getgames(localStorage.username, localStorage.password, callback);
+    }
 
-        $.ajax({
-            type: "POST",
-            url: "/mygames",
-            data:   {
+    addClosure(game, type) {
+        var myClass = this;
+
+        return function() {
+            var container = "#gamesIOwn";
+            var own = true;
+            if (type == "want") {
+                container = "#gamesIWant";
+                own = false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/mygames",
+                data: {
                     "game": game,
                     "own": own
-                  },
-            headers: {
-              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
-            },
-            async: false,
-            success: function(response) {
-                var li = myClass.showGame(response);
-                $(container).append(li);
-                console.log("response.game");
-            }
-        });
-      };
+                },
+                headers: {
+                    "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+                },
+                async: false,
+                success: function(response) {
+                    var li = myClass.showGame(response);
+                    $(container).append(li);
+                    console.log("response.game");
+                }
+            });
+        };
     }
 
-    showGame(response){
-      var li = $("<li></li>");
+    showGame(response) {
+        var li = $("<li></li>");
 
-      var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
+        var removeGameButton = $("<button type='button' class='waves-effect waves-light btn'>Delete</button>");
 
-      li.append(response.game);
-      li.append(removeGameButton);
+        li.append(response.game);
+        li.append(removeGameButton);
 
-      removeGameButton.click( this.deleteClosure(response._id,response.own, li) );
-      return li;
+        removeGameButton.click(this.deleteClosure(response._id, response.own, li));
+        return li;
     }
 
 
-    deleteClosure(id,own,li){
-      return function(){
+    deleteClosure(id, own, li) {
+        return function() {
 
-        $.ajax({
-            type: "DELETE",
-            url: "/mygames/"+id,
-            headers: {
-              "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
-            },
-            async: false,
-            success: function(response) {
-                console.log(response);
-                li.remove();
-                //if(own) $("#gamesIOwn").remove(li);
-                //else $("#gamesIWant").remove(li);
-            }
-        });
-      };
+            $.ajax({
+                type: "DELETE",
+                url: "/mygames/" + id,
+                headers: {
+                    "Authorization": "Basic " + btoa(localStorage.username + ":" + localStorage.password)
+                },
+                async: false,
+                success: function(response) {
+                    console.log(response);
+                    li.remove();
+                }
+            });
+        };
     }
-
 }

@@ -5,35 +5,12 @@ var materialize = require('materialize-css');
 
 import GameswapView from './view.js';
 
-
-/*window.addEventListener('DOMContentLoaded', function(e) {
-    mockData.game.forEach(function(value, index) {
-        document.querySelectorAll('li:nth-child(1) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
-        document.querySelectorAll('li:nth-child(2) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
-    });
-    mockData.city.forEach(function(value, index) {
-        document.querySelectorAll('li:nth-child(3) select')[0].innerHTML += '<option value="' + value + '">' + value + '</option>';
-    });
-});*/
-
-
-
-
 $(document).ready(function() {
 
-  window.gameswapApp = new GameswapView();
-  $("#logoutMenu").hide();
-  $("#searchMenu").hide();
-  $("#profileMenu").hide();
-  /*
-    $("#game-search").submit(function(event) {
-        event.preventDefault();
-        console.log("The data was submitted");
-        gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
-        return false;
-
-    });
-*/
+    window.gameswapApp = new GameswapView();
+    $("#logoutMenu").hide();
+    $("#searchMenu").hide();
+    $("#profileMenu").hide();
     $("#login").submit(function(event) {
         event.preventDefault();
         console.log("The user is logged in");
@@ -54,7 +31,7 @@ $(document).ready(function() {
         $("#searchMenu").hide();
         $("#profileMenu").hide();
         //take to home page
-    })
+    });
 
     $("#signinForm").submit(function(event) {
         event.preventDefault();
@@ -74,11 +51,11 @@ $(document).ready(function() {
 
     //go to login page
     $("#loginMenu").click(e => {
+        $("#search").hide();
         $("#loginform").show();
         $(".nav").show();
         $("#create-profile").hide();
         $("#home").hide();
-        $("#search").hide();
     });
 
     //login and go home
@@ -99,6 +76,16 @@ $(document).ready(function() {
         $("#search").hide();
     });
 
+    //hit GameSwap logo button on nav to go home
+    $(".nav .brand-logo").click(e => {
+        $(".nav").show();
+        $("#home").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#search").hide();
+        $("#profile").hide();
+    });
+
     //hit home button on nav to go home
     $(".nav #homeMenu").click(e => {
         $(".nav").show();
@@ -117,19 +104,7 @@ $(document).ready(function() {
         $("#create-profile").hide();
         $("#loginform").hide();
         $("#home").hide();
-
         gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
-
-        /*
-        var showMatches = function () {
-          $("#game-search").submit(function(event) {
-              event.preventDefault();
-              console.log("The data was submitted");
-              gameswapApp.showSearchResults(".games-owned", ".games-wanted", ".city");
-              return false;
-          });
-        };
-        $("match-data").html(showMatches);*/
     });
 
     //hit profile button on nav to go to myprofile screen
@@ -143,16 +118,18 @@ $(document).ready(function() {
         gameswapApp.getGames();
     });
 
+
     //page refresh
     if (localStorage.username !== undefined && localStorage.password !== undefined) {
-      $("#loginMenu").hide();
-      $("#logoutMenu").show();
-      $("#searchMenu").show();
-      $("#profileMenu").show();
+        $("#loginMenu").hide();
+        $("#logoutMenu").show();
+        $("#searchMenu").show();
+        $("#profileMenu").show();
     } else {
-      $("#loginMenu").show();
-      $("#logoutMenu").hide();
-      $("#searchMenu").hide();
-      $("#profileMenu").hide();
+        $("#homeMenu").show();
+        $("#loginMenu").show();
+        $("#logoutMenu").hide();
+        $("#searchMenu").hide();
+        $("#profileMenu").hide();
     }
 });

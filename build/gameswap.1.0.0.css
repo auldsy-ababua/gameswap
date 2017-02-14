@@ -7317,6 +7317,22 @@ button.picker__close:focus {
 #search,
 #matches {
   display: none;
+  font-family: 'Bahiana', cursive;
+}
+.nav {
+  font-family: 'Bahiana', cursive;
+}
+.nav ul a {
+  font-size: 2rem;
+}
+.brand-logo {
+  font-size: 4.1rem !important;
+}
+.profile-template h5 {
+  font-family: 'Orbitron', sans-serif;
+}
+.profile-template {
+  background-color: white;
 }
 select {
   display: inline-block;

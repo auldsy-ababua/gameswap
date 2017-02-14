@@ -3,21 +3,19 @@
 <!-- gist for this project can be found here: https://gist.github.com/auldsy-ababua/05efd51146647a18f80f1b689a578ce5 -->
 
 <head>
-
     <title>Gameswap MVP</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="gameswap.1.0.0.css">
+    <link href="https://fonts.googleapis.com/css?family=Bahiana|Orbitron|Russo+One|Sansita" rel="stylesheet">    <link rel="stylesheet" href="gameswap.1.0.0.css">
 </head>
 
 <body>
     <!--nav-->
     <nav class="nav">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Logo</a>
+            <a href="#" class="brand-logo">Game Swap</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a id="homeMenu" href="#">Home</a></li>
-                <li><a id="searchMenu" href="#">Search</a></li>
+                <li><a id="searchMenu" href="#">Matches</a></li>
                 <li><a id="profileMenu" href="#">Profile</a></li>
                 <li><a id="loginMenu" href="#">Login</a></li>
                 <li><a id="logoutMenu" href="#">Logout</a></li>
@@ -86,47 +84,16 @@
             </form>
         </div>
     </section>
+
+
+
     <!--home screen-->
     <section id="home">
-        <!--
-        <form name="game-search" id="game-search" action="index_submit" method="get" accept-charset="utf-8">
-            <ul>
-                <li>
-                    <div class="input-field col s6">
-                        <select class="games-owned">
-                            <option value="" disabled selected>What Game Do You Want To Trade?</option>
-                        </select>
-                    </div>
-                </li>
-                <li>
-                    <div class="input-field col s6">
-                        <select class="games-wanted">
-                            <option value="" disabled selected>What Game Would You Like To Have?</option>
-                        </select>
-                    </div>
-                </li>
-                <li>
-                    <div class="input-field col s12">
-                        <select class="city">
-                            <option value="" disabled selected>What City Do You Live In?</option>
-                        </select>
-                    </div>
-                </li>
-                <li>
-                    <button class="btn waves-effect waves-light" id="search-submit-button" type="submit" name="action">Show me my matches
-                        <i class="material-icons right">send</i>
-                    </button>
-                </li>
-            </ul>
-        </form>
-      -->
-
         <ul class="slides">
             <li>
                 <img src="https://images.unsplash.com/10/wii.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=43cfc3deeed70e165663284179867d30">
                 <div class="caption center-align">
-                    <h3>Easy swaps</h3>
-                    <h5 class="light grey-text text-lighten-3">Meet with your trader.</h5>
+                    <h3>The End of Rip-off Trades Is Here</h3>
                 </div>
             </li>
         </ul>
@@ -135,7 +102,7 @@
                 <div class="row">
                     <div class="col l6 s12">
                         <h5 class="white-text">Our Mission</h5>
-                        <p class="grey-text text-lighten-4">Thanks for coming to Gameswap, where you can cut out the gamestop middleman.</p>
+                        <p class="grey-text text-lighten-4">To cut out the gamestop middleman and save you money.</p>
                     </div>
                     <div class="col l4 offset-l2 s12">
                         <h5 class="white-text">Follow Me</h5>
@@ -153,16 +120,12 @@
             </div>
         </footer>
     </section>
+
+
+
+
     <!--profile screen-->
     <section id="profile">
-        <!--<div id="owned">
-            <h5 class="gamesOwned">Games You Own: <span></span></h5>
-            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div id="wanted">
-            <h5 class="gamesWanted">Games You Want: <span></span></h5>
-            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>-->
         <form name="add-owned" id="add-owned" action="index_submit" method="post" accept-charset="utf-8">
             <ul>
                 <li>
@@ -178,18 +141,14 @@
 
 
             <ul id="gamescontainer">
-
             </ul>
         </form>
-
-
 
         <div style="display: flex">
           <div style='flex: 1'>
             <h2>Games I own</h2>
 
             <ul id="gamesIOwn">
-
             </ul>
           </div>
           <div style='flex: 1'>
@@ -200,19 +159,20 @@
             </ul>
           </div>
         </div>
-
     </section>
+
+
 
     <!--search screen-->
     <section id="search">
         <div class="caption center-align">
-            <h3>Your Local Matches</h3>
+            <h2>Your Local Matches</h2>
         </div>
         <div id="match-data">
         </div>
-
         <div id="template-parent" style="display:none">
             <div class="profile-template">
+                <hr/>
                 <h5 class="email">Email: <span></span></h5>
                 <h5 class="city">City: <span></span></h5>
                 <h5 class="game">game matched: <span></span></h5>
