@@ -93,7 +93,12 @@ export default class GameswapView {
                     success: function(response) {
                         var matchTemplate = $("#template-parent .profile-template").clone();
                         response.games.forEach(function(userGames) {
-                            $(matchTemplate).find(".game span").append(userGames.game);
+                          //and if for spans game owned and game wanted
+                          if (userGames.own == true) {
+                            $(matchTemplate).find(".theyOwn span").append(userGames.game);
+                          } else {
+                            $(matchTemplate).find(".theyWant span").append(userGames.game);
+                          }
                         });
                         $(matchTemplate).find(".email span").html(response.user.email);
                         $(matchTemplate).find(".city span").html(response.user.city);

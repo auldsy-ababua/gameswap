@@ -5,7 +5,10 @@
 <head>
     <title>Gameswap MVP</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Bahiana|Orbitron|Russo+One|Sansita" rel="stylesheet">    <link rel="stylesheet" href="gameswap.1.0.0.css">
+    <link href="https://fonts.googleapis.com/css?family=Bahiana|Orbitron|Russo+One|Sansita" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="gameswap.1.0.0.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
@@ -126,25 +129,25 @@
 
     <!--profile screen-->
     <section id="profile">
-        <form name="add-owned" id="add-owned" action="index_submit" method="post" accept-charset="utf-8">
-            <ul>
-                <li>
+        <form name="add-owned" id="add-owned" class="col s12" action="index_submit" method="post" accept-charset="utf-8">
+            <div class="row">
+                <div class="col s11" id="seach-input">
                     <label for="owned"></label>
-                    <input type="search" name="owned" id="gamesearch" placeholder="Search for games to add in your profile">
-                </li>
-                <li>
+                    <input type="search" name="owned" id="gamesearch" placeholder="Search for games to add to your profile">
+                </div>
+                <div class="col s1" id="search-submit">
                     <button class="btn-floating btn-large waves-effect waves-light red" type="submit"
                         <i class="material-icons">search</i>
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
 
 
             <ul id="gamescontainer">
             </ul>
         </form>
 
-        <div style="display: flex">
+        <div id="own-and-want" style="display: flex">
           <div style='flex: 1'>
             <h2>Games I own</h2>
 
@@ -175,7 +178,8 @@
                 <hr/>
                 <h5 class="email">Email: <span></span></h5>
                 <h5 class="city">City: <span></span></h5>
-                <h5 class="game">game matched: <span></span></h5>
+                <h5 class="theyOwn">Owns: <span></span></h5>
+                <h5 class="theyWant">Wants Your Copy of: <span></span></h5>
                 <hr/>
             </div>
         </div>

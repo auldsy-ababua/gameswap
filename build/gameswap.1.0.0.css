@@ -7334,6 +7334,18 @@ button.picker__close:focus {
 .profile-template {
   background-color: white;
 }
+.row {
+  margin-top: 1.4rem;
+}
+#own-and-want {
+  padding-left: 1.5rem;
+}
+#add-owned ul {
+  display: inline-block;
+}
+#add-owned ul li {
+  display: inline-block;
+}
 select {
   display: inline-block;
 }
