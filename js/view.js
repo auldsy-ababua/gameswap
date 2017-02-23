@@ -80,7 +80,7 @@ export default class GameswapView {
     }
 
     showSearchResults(owned, wanted, city) {
-        $("#match").empty();
+        $("#match-data").empty();
         function callback(data) {
             var container = $("#match-data");
             console.log(data);

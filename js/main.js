@@ -47,8 +47,6 @@ $(document).ready(function() {
         return false;
     });
 
-
-
     //go to login page
     $("#loginMenu").click(e => {
         $("#search").hide();
