@@ -22,16 +22,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $("#logoutMenu").click(function(event) {
-        console.log('logged out the user', localStorage.username);
-        delete localStorage.username;
-        delete localStorage.password;
-        $("#loginMenu").show();
-        $("#logoutMenu").hide();
-        $("#searchMenu").hide();
-        $("#profileMenu").hide();
-        //take to home page
-    });
+
 
     $("#signinForm").submit(function(event) {
         event.preventDefault();
@@ -55,6 +46,23 @@ $(document).ready(function() {
         $("#create-profile").hide();
         $("#home").hide();
     });
+
+    $("#logoutMenu").click(e => {
+        console.log('logged out the user', localStorage.username);
+        delete localStorage.username;
+        delete localStorage.password;
+        $("#loginMenu").show();
+        $("#logoutMenu").hide();
+        $("#searchMenu").hide();
+        $("#profileMenu").hide();
+        $(".nav").show();
+        $("#home").show();
+        $("#create-profile").hide();
+        $("#loginform").hide();
+        $("#search").hide();
+        $("#profile").hide();
+    });
+
 
     //login and go home
     $("#loginform #login-button").click(e => {
