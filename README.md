@@ -29,5 +29,5 @@ Once another user in the same city picks complementary games for trade (User A w
 3. Support for specific consoles. As this is a MVP and merely a proof of concept, I did not have time to make sure the search results were filtered for platform (PC, PS4, XBOX One, etc). In future iterations, one could choose their system in the signup or profile page, and serch results would be filtered that way. As of right now, choosing a game for a specific platform is messy at best. 
 
 ### _TECHNOLOGY USED_:<br>
-1. Server-side: Node/Express, MongoDB, Socket.io<br> 
+1. Server-side: Node/Express, MongoDB, Socket.io, [OAuth 2.0](https://oauth.net/2/)<br> 
 2. Client-side: HTML5, [MaterializeCSS](http://materializecss.com/), LESS
