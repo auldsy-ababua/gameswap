@@ -30,4 +30,4 @@ Once another user in the same city picks complementary games for trade (User A w
 
 ### _TECHNOLOGY USED_:<br>
 1. Server-side: Node/Express, MongoDB, Socket.io<br> 
-2. Client-side: HTML, [MaterializeCSS](http://materializecss.com/), LESS
+2. Client-side: HTML5, [MaterializeCSS](http://materializecss.com/), LESS
