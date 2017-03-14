@@ -83,7 +83,7 @@ var UserGame = require('./models/models').UserGame;
 
 var bcrypt = require('bcryptjs');
 
-//signin endpoint - working
+//signin endpoint
 //(create new user) POST (name, email, password, city)
 app.post('/users', jsonParser, function(req, res) {
     console.log(req.body);
