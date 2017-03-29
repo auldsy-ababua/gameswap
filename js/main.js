@@ -8,7 +8,7 @@ import GameswapView from './view.js';
 $(document).ready(function() {
 
     window.gameswapApp = new GameswapView();
-    $("#logoutMenu").hide();
+    $("#logoutMenu").show();
     $("#searchMenu").hide();
     $("#profileMenu").hide();
     $("#login").submit(function(event) {
